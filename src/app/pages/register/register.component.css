@@ -1,0 +1,26 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f2f2f2;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 500px;
+  padding: 30px;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.button {
+  width: 100%;
+  margin-bottom: 16px;
+  background-color: #3b3939 !important;
+  color: white !important;
+  border-radius: 8px;
+}

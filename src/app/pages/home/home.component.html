@@ -1,0 +1,23 @@
+<button (click)="eliminarCuenta()" style="position: absolute; top: 20px; right: 20px; background-color: red; color: white; border: none; padding: 10px; border-radius: 5px;">
+  Eliminar cuenta
+</button>
+
+<div class="home-container">
+  <h2 class="title">Lista de Libros</h2>
+  <div class="books-grid">
+    <mat-card class="book-card" *ngFor="let libro of libros">
+      <mat-card-header>
+        <mat-card-title>{{ libro.titulo }}</mat-card-title>
+        <mat-card-subtitle class="libro-name">{{ libro.nombre }}</mat-card-subtitle>
+      </mat-card-header>
+
+      <img mat-card-image [src]="libro.imagen_url" alt="Portada del libro">
+
+      <mat-card-content>
+        <p class="descripcion">{{ libro.descripcion }}</p>
+        <p><strong>Precio:</strong> S/. {{ libro.precio }}</p>
+        <p><strong>Stock:</strong> {{ libro.stock }} unidades</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
