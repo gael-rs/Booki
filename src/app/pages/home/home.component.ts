@@ -3,14 +3,16 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 
-import { Router } from '@angular/router'; // IMPORTANTE
+import {Router, RouterLink, RouterLinkActive} from '@angular/router'; // IMPORTANTE
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [
     CommonModule,
-    MatCardModule
+    MatCardModule,
+    RouterLink,
+    RouterLinkActive
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'

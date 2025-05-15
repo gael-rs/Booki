@@ -5,7 +5,7 @@ import {MatCard} from '@angular/material/card';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
 
-import { Router } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 
 
 @Component({
@@ -22,7 +22,8 @@ import { Router } from '@angular/router';
     MatLabel,
     MatFormField,
     ReactiveFormsModule,
-    MatButton
+    MatButton,
+    RouterLink
   ],
   styleUrls: ['./register.component.css']
 })

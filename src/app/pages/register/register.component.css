@@ -1,15 +1,80 @@
-.register-container {
+.register-wrapper {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
   background-color: #f2f2f2;
 }
 
-.register-card {
+.register-left {
+  flex: 1;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #f7f9fc;
+  color: white;
+  text-align: center;
+  align-items: center;
+}
+
+.register-right {
+  flex: 1;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  padding: 0; /* Eliminamos padding innecesario */
+}
+
+.register-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 40px;
+}
+
+.logo {
+  width: 270px;
+  margin-bottom: 20px;
+}
+
+.register-title {
+  font-size: 28px;
+  margin-bottom: 28px;
+  font-weight: bolder;
+}
+
+.register-title-left {
+  font-size: 28px;
+  font-weight: bolder;
+  color: #0A4273;
+  margin-bottom: 1px;
+}
+
+
+
+.register-subtitle {
+  font-size: 16px;
+  color: #4a4a4a;
+  padding: 0 10px;
+  margin-bottom: 20px;
+}
+
+.login-text {
+  color: #4a4a4a;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.login-link {
+  font-weight: bold;
+  text-decoration: underline;
+  color: #0A4273;
+
+}
+
+.register-form {
   width: 100%;
   max-width: 500px;
-  padding: 30px;
+  margin: 0 auto;
 }
 
 .full-width {
@@ -17,10 +82,17 @@
   margin-bottom: 15px;
 }
 
+.form-label {
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: #333;
+  display: block;
+}
+
 .button {
   width: 100%;
   margin-bottom: 16px;
-  background-color: #3b3939 !important;
+  background-color:  #0A4273 !important;
   color: white !important;
   border-radius: 8px;
 }

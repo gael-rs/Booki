@@ -1,24 +1,35 @@
-<div class="login-container">
-  <mat-card class="login-card">
-    <h2 style="text-align: center;">Login</h2>
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+<div class="login-wrapper">
+  <!-- Lado Izquierdo -->
+  <div class="login-left">
+    <img src="https://cdn.worldvectorlogo.com/logos/bookingcom-1.svg" alt="Booki Logo" class="logo" /> <!-- Cambia la ruta si es necesario -->
 
+    <h2 class="login-title">Login</h2>
+    <p class="login-subtitle">Logeate con tu cuenta para poder comprar libros</p>
 
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <label class="form-label">Enter your email address</label>
       <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Usuario</mat-label>
         <input matInput formControlName="usuario" />
       </mat-form-field>
 
-
-
+      <label class="form-label">Enter your password</label>
       <mat-form-field appearance="fill" class="full-width">
-        <mat-label>Contraseña</mat-label>
         <input matInput type="password" formControlName="contrasena" />
       </mat-form-field>
 
-
-
       <button mat-raised-button color="primary" type="submit" class="button">Iniciar sesión</button>
     </form>
-  </mat-card>
+
+    <p class="register-text">
+      Don't have an account?
+      <a routerLink="/register" class="register-link">Register</a>
+    </p>
+  </div>
+
+  <!-- Lado Derecho -->
+  <div class="login-right">
+    <h2 class="welcome-title">Nice to see you again</h2>
+    <p class="welcome-subtitle">Welcome back</p>
+    <img src="https://images.vexels.com/media/users/3/144860/isolated/preview/5128b7ff4b40f49cd6c0ce8698b9a19a-ilustracion-de-libros-de-lectura-de-nino.png" alt="Welcome Image" class="welcome-image" />
+  </div>
 </div>

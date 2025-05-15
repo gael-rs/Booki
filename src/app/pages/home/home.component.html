@@ -1,23 +1,60 @@
-<button (click)="eliminarCuenta()" style="position: absolute; top: 20px; right: 20px; background-color: red; color: white; border: none; padding: 10px; border-radius: 5px;">
-  Eliminar cuenta
-</button>
+<!-- En tu index.html (una sola vez) -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-<div class="home-container">
-  <h2 class="title">Lista de Libros</h2>
-  <div class="books-grid">
-    <mat-card class="book-card" *ngFor="let libro of libros">
-      <mat-card-header>
-        <mat-card-title>{{ libro.titulo }}</mat-card-title>
-        <mat-card-subtitle class="libro-name">{{ libro.nombre }}</mat-card-subtitle>
-      </mat-card-header>
 
-      <img mat-card-image [src]="libro.imagen_url" alt="Portada del libro">
+<div class="layout">
+  <aside class="sidebar">
+    <div class="logo-container">
+      <img src="https://cdn.worldvectorlogo.com/logos/bookingcom-1.svg" alt="Logo" class="logo">
+      <h1 class="brand-name">Booki</h1>
+    </div>
+    <nav class="sidebar-nav">
+      <a routerLink="/home" routerLinkActive="active">
+        <span class="material-icons">home</span>
+        <span class="link-text">Home</span>
+      </a>
+      <a routerLink="/libros" routerLinkActive="active">
+        <span class="material-icons">menu_book</span>
+        <span class="link-text">Libros</span>
+      </a>
+    </nav>
+  </aside>
 
-      <mat-card-content>
-        <p class="descripcion">{{ libro.descripcion }}</p>
-        <p><strong>Precio:</strong> S/. {{ libro.precio }}</p>
-        <p><strong>Stock:</strong> {{ libro.stock }} unidades</p>
-      </mat-card-content>
-    </mat-card>
+  <!-- Contenido principal -->
+  <div class="main-content">
+    <!-- Navbar -->
+    <header class="navbar">
+      <input type="text" class="search-bar" placeholder="Buscar libros...">
+      <div class="nav-icons">
+        <span class="material-icons">shopping_cart</span>
+        <span class="material-icons">account_circle</span>
+      </div>
+    </header>
+
+    <!-- Botón eliminar cuenta -->
+    <button (click)="eliminarCuenta()" class="delete-button">
+      Eliminar cuenta
+    </button>
+
+    <!-- Lista de libros -->
+    <div class="home-container">
+      <h2 class="title">Lista de Libros</h2>
+      <div class="books-grid">
+        <mat-card class="book-card" *ngFor="let libro of libros">
+          <mat-card-header>
+            <mat-card-title>{{ libro.titulo }}</mat-card-title>
+            <mat-card-subtitle class="libro-name">{{ libro.nombre }}</mat-card-subtitle>
+          </mat-card-header>
+
+          <img mat-card-image [src]="libro.imagen_url" alt="Portada del libro">
+
+          <mat-card-content>
+            <p class="descripcion">{{ libro.descripcion }}</p>
+            <p><strong>Precio:</strong> S/. {{ libro.precio }}</p>
+            <p><strong>Stock:</strong> {{ libro.stock }} unidades</p>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </div>
   </div>
 </div>

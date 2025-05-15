@@ -1,25 +1,98 @@
-.login-container {
+.login-wrapper {
   display: flex;
-  justify-content: center;
-  align-items: center;
   height: 100vh;
+  width: 100%;
   background-color: #f5f5f5;
 }
 
-.login-card {
-  width: 350px;
-  padding: 20px;
+.login-left, .login-right {
+  flex: 1;
+  padding: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-left {
+  background-color: white;
+}
+
+.logo {
+  width: 45px;
+  margin-bottom: 20px;
+}
+
+.login-title {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.login-subtitle {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 30px;
 }
 
 .full-width {
   width: 100%;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
+}
+
+.form-label {
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: #333;
+  display: block;
 }
 
 .button {
   width: 100%;
-  margin-bottom: 16px;
-  background-color: #3b3939 !important;
+  background-color: #0A3873 !important;
   color: white !important;
   border-radius: 8px;
+  margin-bottom: 16px;
 }
+
+.register-text {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.register-link {
+  color: #0A3873;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.register-link:hover {
+  text-decoration: underline;
+}
+
+.login-right {
+  background-color: #f7f9fc;
+  color: white;
+  text-align: center;
+  align-items: center;
+}
+
+.welcome-title {
+  font-size: 20px;
+  margin-bottom: -30px;
+  color: #4a4a4a;
+  font-weight: bold
+}
+
+.welcome-subtitle {
+  font-size: 50px;
+  margin-bottom: 20px;
+  color: #0A4273;
+  font-weight: bolder;
+}
+
+.welcome-image {
+  max-width: 315px;
+  height: auto;
+  margin: 0 auto;
+}
+
