@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
-
-import {Router, RouterLink, RouterLinkActive} from '@angular/router'; // IMPORTANTE
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { MatButton } from '@angular/material/button'; // IMPORTANTE
 
 @Component({
   selector: 'app-home',
@@ -11,92 +12,77 @@ import {Router, RouterLink, RouterLinkActive} from '@angular/router'; // IMPORTA
   imports: [
     CommonModule,
     MatCardModule,
-    RouterLink,
-    RouterLinkActive
+    FormsModule,
   ],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
+  isSidebarExpanded = false;
+  isHomePage = true;  // Empezamos en la página Home
+  isProfilePage = false;
 
-  libros: any[] = [];
-
-  constructor(private http: HttpClient, private router: Router) {}
-
-  ngOnInit(): void {
-
-    const usuario_id = localStorage.getItem('usuario_id');
-    if (!usuario_id) {
-      alert('Debes iniciar sesión primero');
-      this.router.navigate(['/login']);
-      return;
+  publicaciones = [
+    {
+      BookTitle: 'Mi primer post',
+      autor: 'Juan Pérez',
+      content: 'Este es el contenido de mi primer post. Estoy muy emocionado de compartirlo con todos.',
+      imgUrl: 'https://www.crisol.com.pe/media/catalog/product/cache/cf84e6047db2ba7f2d5c381080c69ffe/9/7/9781404117150.jpg',  // URL de la imagen
+      likes: 25,
+      commentCount: 10
+    },
+    {
+      BookTitle: 'Un día en la playa',
+      autor: 'Ana Gómez',
+      content: 'Hoy fui a la playa y fue increíble. El mar, la arena y el sol, todo perfecto.',
+      imgUrl: 'https://www.crisol.com.pe/media/catalog/product/cache/cf84e6047db2ba7f2d5c381080c69ffe/9/7/9786124404597_wdvknxij4gex4o57.jpg',  // URL de la imagen
+      likes: 30,
+      commentCount: 5
+    },
+    {
+      BookTitle: 'Cocinando mi receta favorita',
+      autor: 'Carlos Ruiz',
+      content: 'Hoy cociné mi receta favorita de pasta. ¡Les dejo una foto de cómo quedó!',
+      imgUrl: 'https://www.crisol.com.pe/media/catalog/product/cache/cf84e6047db2ba7f2d5c381080c69ffe/9/7/9786125177162_wmnan7zvjl9gaho9.jpg',  // URL de la imagen
+      likes: 15,
+      commentCount: 8
     }
+  ];
 
 
+  // Hardcodeando el usuario con más detalles
+  usuario = {
+    nombre: 'Juan Pérez',
+    email: 'juan.perez@example.com',
+    username: 'juanperez123',  // Username
+    photoUrl: 'https://img.freepik.com/foto-gratis/retrato-hombre-blanco-aislado_53876-40306.jpg',  // Foto de perfil
+    bio: 'Amante de los libros, escritor aficionado y fotógrafo amateur.',  // Bio
+    favoriteGenres: ['Ficción', 'Aventura', 'Ciencia ficción'],  // Géneros favoritos
+    followers: ['ana_gomez', 'carlos_ruiz'],  // Lista de seguidores
+    following: ['juanperez123', 'ana_gomez'],  // Lista de seguidos
+    publicaciones: [
+      {
+        titulo: 'Mi primer post',
+        autor: 'Juan Pérez',
+        descripcion: 'Este es el contenido de mi primer post. Estoy muy emocionado de compartirlo con todos.',
+      },
+      {
+        titulo: 'Cocinando mi receta favorita',
+        autor: 'Carlos Ruiz',
+        descripcion: 'Hoy cociné mi receta favorita de pasta. ¡Les dejo una foto de cómo quedó!',
+      }
+    ]
+  };
 
-    this.http.get<any[]>('http://20.55.45.214/get_libros.php')
-      .subscribe({
-        next: data => {
-          this.libros = data.map(libro => {
-            let imagenUrl = '';
-
-            switch (libro.autor) {
-              case 'Paulo Coelho':
-                imagenUrl = 'https://www.libreriasur.com.pe/imagenes/9786287/978628757443.webp';
-                break;
-              case 'Yuval Noah Harari':
-                imagenUrl = 'https://www.libreriasur.com.pe/imagenes/9788419/978841939971.webp';
-                break;
-              case 'George Orwell':
-                imagenUrl = 'https://www.libreriasur.com.pe/imagenes/9788491/978849111764.webp';
-                break;
-              case 'Eckhart Tolle':
-                imagenUrl = 'https://www.libreriasur.com.pe/imagenes/9788484/978848445701.webp';
-                break;
-              case 'J.K. Rowling':
-                imagenUrl = 'https://www.libreriasur.com.pe/imagenes/9788418/978841817407.webp';
-                break;
-              default:
-                imagenUrl = 'https://i.imgur.com/oH8lL4u.jpg'; // Imagen por defecto
-            }
-
-            return { ...libro, imagen_url: imagenUrl };
-          });
-        },
-        error: err => console.error('Error al obtener libros:', err)
-      });
+  // Función para cambiar a la página de Home
+  goToHome() {
+    this.isHomePage = true;
+    this.isProfilePage = false;
   }
 
-
-  eliminarCuenta(): void {
-    const usuario_id = localStorage.getItem('usuario_id');
-
-    if (!usuario_id) {
-      alert('No se pudo encontrar el ID del usuario');
-      return;
-    }
-
-    const confirmacion = confirm('¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.');
-
-    if (!confirmacion) return;
-
-    this.http.post('http://20.55.45.214/eliminar_usuario.php', { usuario_id }).subscribe({
-      next: (res: any) => {
-        if (res.mensaje === 'Cuenta eliminada correctamente') {
-          alert('Tu cuenta ha sido eliminada con éxito');
-          localStorage.removeItem('usuario_id');
-          this.router.navigate(['/login']);
-        } else {
-          alert('Ocurrió un error al eliminar la cuenta');
-          console.log(res);
-        }
-      },
-      error: err => {
-        console.error('Error al eliminar la cuenta:', err);
-        alert('Hubo un problema al intentar eliminar tu cuenta.');
-      }
-    });
+  // Función para cambiar a la página de Profile
+  goToProfile() {
+    this.isHomePage = false;
+    this.isProfilePage = true;
   }
 }
-
-

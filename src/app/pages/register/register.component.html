@@ -18,36 +18,19 @@
       <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
         <h2 class="register-title">Register</h2>
 
-        <label class="form-label">Nombre</label>
-        <mat-form-field appearance="fill" class="full-width">
-          <input matInput formControlName="nombre" />
-        </mat-form-field>
-
-        <label class="form-label">Apellido</label>
-        <mat-form-field appearance="fill" class="full-width">
-          <input matInput formControlName="apellido" />
-        </mat-form-field>
-
-        <label class="form-label">Correo electrónico</label>
-        <mat-form-field appearance="fill" class="full-width">
-          <input matInput type="email" formControlName="correo" />
-        </mat-form-field>
-
-        <label class="form-label">Teléfono</label>
-        <mat-form-field appearance="fill" class="full-width">
-          <input matInput formControlName="telefono" />
-        </mat-form-field>
-
-        <label class="form-label">Dirección</label>
-        <mat-form-field appearance="fill" class="full-width">
-          <input matInput formControlName="direccion" />
-        </mat-form-field>
-
+        <!-- Nombre de usuario -->
         <label class="form-label">Nombre de usuario</label>
         <mat-form-field appearance="fill" class="full-width">
           <input matInput formControlName="nombre_usuario" />
         </mat-form-field>
 
+        <!-- Correo electrónico -->
+        <label class="form-label">Correo electrónico</label>
+        <mat-form-field appearance="fill" class="full-width">
+          <input matInput type="email" formControlName="correo" />
+        </mat-form-field>
+
+        <!-- Contraseña -->
         <label class="form-label">Contraseña</label>
         <mat-form-field appearance="fill" class="full-width">
           <input matInput type="password" formControlName="contrasena" />

@@ -32,14 +32,9 @@ export class RegisterComponent {
 
   constructor(private fb: FormBuilder, private http: HttpClient,  private router: Router) {
     this.registerForm = this.fb.group({
-      nombre: ['', Validators.required],
-      apellido: ['', Validators.required],
-      correo: ['', [Validators.required, Validators.email]],
-      telefono: ['', Validators.required],
-      direccion: ['', Validators.required],
-      localidad_id: 1,
-      nombre_usuario: ['', Validators.required],
-      contrasena: ['', Validators.required]
+      nombre_usuario: ['', Validators.required],  // Username
+      correo: ['', [Validators.required, Validators.email]],  // Email
+      contrasena: ['', Validators.required],  // Password
     });
   }
 
@@ -47,12 +42,24 @@ export class RegisterComponent {
     if (this.registerForm.valid) {
       const datos = this.registerForm.value;
 
-      this.http.post('http://20.55.45.214/registro.php', datos)
+      // Enviar datos al servidor
+      this.http.post('http://20.121.43.34:3000/api/users', {
+        username: datos.nombre_usuario,
+        email: datos.correo,
+        password: datos.contrasena,
+        photoUrl: '',  // Valores vacíos para estos campos
+        bio: '',
+        favoriteGenres: [],
+        followers: [],
+        following: [],
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
+      })
         .subscribe({
           next: (res) => {
             alert('Usuario registrado correctamente');
             console.log(res);
-            this.router.navigate(['/home']); // 👈 Redirige a /home
+            this.router.navigate(['/login']); // Redirige a /home después del registro
           },
           error: (err) => {
             alert('Error al registrar usuario');
