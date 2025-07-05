@@ -45,12 +45,11 @@
       <div class="books-grid">
         <mat-card class="book-card" *ngFor="let publicacion of publicaciones">
           <mat-card-header>
-            <mat-card-title>{{ publicacion.BookTitle }}</mat-card-title>
+            <mat-card-title>{{ publicacion.bookTitle }}</mat-card-title>
             <mat-card-subtitle>{{ publicacion.autor }}</mat-card-subtitle>
-
           </mat-card-header>
           <mat-card-content>
-            <img mat-card-avatar [src]="publicacion.imgUrl" alt="Imagen del libro" class="book-image">
+            <img mat-card-avatar [src]="publicacion.imageUrl" alt="Imagen del libro" class="book-image">
 
             <p>{{ publicacion.content }}</p>
             <div class="post-stats">
@@ -61,32 +60,26 @@
         </mat-card>
       </div>
 
+
       <!-- Formulario para realizar una publicación -->
       <div class="new-post-container">
         <h3 class="new-post-title">Realiza una publicación</h3>
-        <form class="new-post-form">
+        <form (ngSubmit)="submitPost()" class="new-post-form">
           <label for="title">Título</label>
-          <input type="text" id="title" placeholder="Escribe el título" required>
+          <input type="text" id="title" [(ngModel)]="newPost.bookTitle" name="title" placeholder="Escribe el título" required>
 
           <label for="author">Autor</label>
-          <input type="text" id="author" placeholder="Escribe el autor" required>
+          <input type="text" id="author" [(ngModel)]="newPost.author" name="author" placeholder="Escribe el autor" required>
 
           <label for="content">Contenido</label>
-          <textarea id="content" placeholder="Escribe el contenido" required></textarea>
+          <textarea id="content" [(ngModel)]="newPost.content" name="content" placeholder="Escribe el contenido" required></textarea>
 
           <label for="imageUrl">Imagen URL</label>
-          <input type="url" id="imageUrl" placeholder="Pega el enlace de la imagen" required>
+          <input type="url" id="imageUrl" [(ngModel)]="newPost.imageUrl" name="imageUrl" placeholder="Pega el enlace de la imagen" required>
 
           <button type="submit" class="submit-button">Publicar</button>
         </form>
       </div>
-
-    </div>
-
-
-
-
-
 
     <!-- Información del perfil -->
     <div class="profile-info" *ngIf="isProfilePage">
