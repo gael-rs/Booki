@@ -66,8 +66,6 @@ export class RegisterComponent {
             console.error(err);
           }
         });
-    } else {
-      alert('Por favor completa todos los campos');
     }
   }
 }

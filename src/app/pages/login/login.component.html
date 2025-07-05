@@ -9,16 +9,17 @@
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
       <label class="form-label">Enter your email address</label>
       <mat-form-field appearance="fill" class="full-width">
-        <input matInput formControlName="usuario" />
+        <input matInput formControlName="correo" /> <!-- Cambiar a 'correo' -->
       </mat-form-field>
 
       <label class="form-label">Enter your password</label>
       <mat-form-field appearance="fill" class="full-width">
-        <input matInput type="password" formControlName="contrasena" />
+        <input matInput type="password" formControlName="contrasena" /> <!-- Cambiar a 'contrasena' -->
       </mat-form-field>
 
       <button mat-raised-button color="primary" type="submit" class="button">Iniciar sesión</button>
     </form>
+
 
     <p class="register-text">
       Don't have an account?
