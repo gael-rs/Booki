@@ -1,11 +1,8 @@
 <!-- En tu index.html (una sola vez) -->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-
 <div class="layout" [class.sidebar-expanded]="isSidebarExpanded">
-  <aside class="sidebar"
-         (mouseenter)="isSidebarExpanded = true"
-         (mouseleave)="isSidebarExpanded = false">
+  <aside class="sidebar" (mouseenter)="isSidebarExpanded = true" (mouseleave)="isSidebarExpanded = false">
     <div class="logo-container">
       <img src="https://cdn.worldvectorlogo.com/logos/bookingcom-1.svg" alt="Logo" class="logo">
       <h1 class="brand-name">Booki</h1>
@@ -23,8 +20,6 @@
         <span class="link-text">Profile</span>
       </a>
     </nav>
-
-
   </aside>
 
   <!-- Contenido principal -->
@@ -50,7 +45,6 @@
           </mat-card-header>
           <mat-card-content>
             <img mat-card-avatar [src]="publicacion.imageUrl" alt="Imagen del libro" class="book-image">
-
             <p>{{ publicacion.content }}</p>
             <div class="post-stats">
               <span><i class="material-icons">thumb_up</i> {{ publicacion.likes }} Likes</span>
@@ -59,7 +53,6 @@
           </mat-card-content>
         </mat-card>
       </div>
-
 
       <!-- Formulario para realizar una publicación -->
       <div class="new-post-container">
@@ -80,20 +73,50 @@
           <button type="submit" class="submit-button">Publicar</button>
         </form>
       </div>
+    </div>
 
     <!-- Información del perfil -->
     <div class="profile-info" *ngIf="isProfilePage">
       <div class="profile-header">
-        <img [src]="usuario.photoUrl" alt="Foto de perfil" class="profile-photo">
+        <!-- Foto de perfil -->
+        <img [src]="usuario.photoUrl || 'default-photo-url.jpg'" alt="Foto de perfil" class="profile-photo">
+
         <div class="profile-details">
-          <h2 class="username">{{ usuario.username }}</h2>
-          <p class="bio">{{ usuario.bio }}</p>
-          <p class="favorite-genres"><strong>Géneros favoritos: </strong>{{ usuario.favoriteGenres.join(', ') }}</p>
-          <p class="followers-count"><strong>Seguidores: </strong>{{ usuario.followers.length }}</p>
-          <p class="following-count"><strong>Siguiendo: </strong>{{ usuario.following.length }}</p>
+          <!-- Nombre de usuario -->
+          <h2 class="username">{{ usuario.username || 'Nombre no disponible' }}</h2>
+          <!-- Biografía -->
+          <p class="bio">{{ usuario.bio || 'Biografía no disponible' }}</p>
+
+          <!-- Géneros favoritos -->
+          <p class="favorite-genres">
+            <strong>Géneros favoritos: </strong>
+            {{ usuario.favoriteGenres && usuario.favoriteGenres.length > 0 ? usuario.favoriteGenres.join(', ') : 'No especificado' }}
+          </p>
+
+          <!-- Botón para editar géneros -->
+          <button mat-raised-button color="primary" (click)="editGenres()" *ngIf="!isEditingGenres">Editar Géneros</button>
+
+          <!-- Formulario para editar géneros favoritos -->
+          <div *ngIf="isEditingGenres">
+            <h3>Editar Géneros Favoritos</h3>
+            <input [(ngModel)]="newGenres" placeholder="Escribe los géneros favoritos" />
+            <button mat-raised-button color="primary" (click)="saveGenres()">Guardar</button>
+            <button mat-raised-button color="warn" (click)="cancelEdit()">Cancelar</button>
+          </div>
+
+          <!-- Seguidores -->
+          <p class="followers-count">
+            <strong>Seguidores: </strong>{{ usuario.followers ? usuario.followers.length : 0 }}
+          </p>
+
+          <!-- Siguiendo -->
+          <p class="following-count">
+            <strong>Siguiendo: </strong>{{ usuario.following ? usuario.following.length : 0 }}
+          </p>
         </div>
       </div>
 
+      <!-- Publicaciones del usuario -->
       <h3>Mis publicaciones</h3>
       <div class="books-grid">
         <mat-card class="book-card" *ngFor="let publicacion of usuario.publicaciones">
@@ -107,9 +130,6 @@
         </mat-card>
       </div>
     </div>
-
-
-
 
   </div>
 </div>

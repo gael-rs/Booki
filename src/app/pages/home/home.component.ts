@@ -24,13 +24,18 @@ export class HomeComponent {
   isProfilePage = false;
 
   publicaciones: any[] = [];
-  usuario: any = {};
+    usuario: any = {};
   newPost: any = {
     content: '',
     imageUrl: '',
     bookTitle: '',
     author: ''
   };
+
+  // Variables para la edición de géneros favoritos
+  isEditingGenres = false;  // Controla si estamos en modo de edición
+  newGenres: string = '';  // Almacenar los nuevos géneros favoritos
+
 
   constructor(private apiService: ApiService) {}
 
@@ -52,15 +57,24 @@ export class HomeComponent {
   }
 
   loadUsers() {
-    this.apiService.getUsers().subscribe(
-      (data) => {
-        this.usuario = data;
-      },
-      (error) => {
-        console.error('Error al obtener el usuario', error);
-      }
-    );
+    const userId = localStorage.getItem('usuario_id');  // Obtener el ID del usuario logueado desde el localStorage
+    console.log('usuario_id obtenido:', userId);  // Verifica que se está obteniendo el ID correctamente
+
+    if (userId) {
+      this.apiService.getUserById(userId).subscribe(
+        (data) => {
+          console.log('Datos del usuario:', data);  // Verifica los datos recibidos de la API
+          this.usuario = data;  // Asigna la respuesta de la API al objeto usuario
+        },
+        (error) => {
+          console.error('Error al obtener el usuario', error);
+        }
+      );
+    } else {
+      console.log('No hay usuario logueado');
+    }
   }
+
 
   // Función para cambiar a la página de Home
   goToHome() {
@@ -89,6 +103,35 @@ export class HomeComponent {
     } else {
       console.error('Faltan campos en el formulario');
     }
+  }
+
+  // Función para iniciar la edición de géneros
+  editGenres() {
+    this.isEditingGenres = true;
+    this.newGenres = this.usuario.favoriteGenres.join(', ');  // Pre-cargar los géneros actuales en el campo
+  }
+
+  // Función para guardar los géneros favoritos actualizados
+  saveGenres() {
+    const updatedGenres = this.newGenres.split(',').map(genre => genre.trim());  // Separar los géneros ingresados por coma
+    this.usuario.favoriteGenres = updatedGenres;  // Actualizar la lista de géneros favoritos del usuario
+
+    // Aquí llamaríamos a una API para guardar los géneros actualizados en el servidor
+    this.apiService.updateUserGenres(this.usuario._id, updatedGenres).subscribe(
+      (response) => {
+        console.log('Géneros favoritos actualizados:', response);
+        this.isEditingGenres = false;  // Finalizar la edición
+      },
+      (error) => {
+        console.error('Error al actualizar los géneros favoritos', error);
+      }
+    );
+  }
+
+  // Función para cancelar la edición de géneros
+  cancelEdit() {
+    this.isEditingGenres = false;
+    this.newGenres = '';  // Limpiar el campo
   }
 }
 
