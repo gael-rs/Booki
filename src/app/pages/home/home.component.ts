@@ -5,7 +5,11 @@ import { MatCardModule } from '@angular/material/card';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
-import {ApiService} from '../../api.service'; // IMPORTANTE
+import {ApiService} from '../../api.service';
+import {MatFormField, MatInput, MatLabel} from '@angular/material/input'; // IMPORTANTE
+import {MatIconModule} from '@angular/material/icon';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatButtonModule} from '@angular/material/button';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +18,13 @@ import {ApiService} from '../../api.service'; // IMPORTANTE
     CommonModule,
     MatCardModule,
     FormsModule,
+    MatFormField,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    MatLabel,
+    MatFormField,
+    MatButtonModule, MatDividerModule, MatIconModule
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
@@ -23,9 +34,9 @@ export class HomeComponent {
   isHomePage = true;  // Empezamos en la página Home
   isProfilePage = false;
 
-  publicaciones: any[] = [];
+    publicaciones: any[] = [];
     usuario: any = {};
-  newPost: any = {
+    newPost: any = {
     content: '',
     imageUrl: '',
     bookTitle: '',
@@ -33,11 +44,11 @@ export class HomeComponent {
   };
 
   // Variables para la edición de géneros favoritos
-  isEditingGenres = false;  // Controla si estamos en modo de edición
-  newGenres: string = '';  // Almacenar los nuevos géneros favoritos
+  isEditingProfiles = false;  // Controla si estamos en modo de edición
+  newProfile: string = '';  // Almacenar los nuevos géneros favoritos
 
 
-  constructor(private apiService: ApiService) {}
+  constructor(private apiService: ApiService, private http: HttpClient) {}
 
   ngOnInit() {
     // Cargar publicaciones y usuario al inicializar el componente
@@ -105,33 +116,58 @@ export class HomeComponent {
     }
   }
 
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    this.apiService.uploadUserPhoto(formData).subscribe({
+      next: (res) => {
+        this.usuario.photoUrl = res.url;
+        console.log('Imagen guardada localmente:', res.url);
+      },
+      error: (err) => {
+        console.error('Error al subir imagen local:', err);
+      }
+    });
+  }
+
   // Función para iniciar la edición de géneros
   editGenres() {
-    this.isEditingGenres = true;
-    this.newGenres = this.usuario.favoriteGenres.join(', ');  // Pre-cargar los géneros actuales en el campo
+    this.isEditingProfiles = true;
+    this.newProfile = this.usuario.favoriteGenres.join(', ');  // Pre-cargar los géneros actuales en el campo
   }
 
   // Función para guardar los géneros favoritos actualizados
-  saveGenres() {
-    const updatedGenres = this.newGenres.split(',').map(genre => genre.trim());  // Separar los géneros ingresados por coma
-    this.usuario.favoriteGenres = updatedGenres;  // Actualizar la lista de géneros favoritos del usuario
+  saveProfile() {
+    const updatedGenres = this.newProfile.split(',').map(genre => genre.trim());
+    this.usuario.favoriteGenres = updatedGenres;
 
-    // Aquí llamaríamos a una API para guardar los géneros actualizados en el servidor
-    this.apiService.updateUserGenres(this.usuario._id, updatedGenres).subscribe(
+    const updatedUser = {
+      username: this.usuario.username,
+      favoriteGenres: updatedGenres,
+      photoUrl: this.usuario.photoUrl,
+      bio: this.usuario.bio
+    };
+
+    this.apiService.updateUser(this.usuario._id, updatedUser).subscribe(
       (response) => {
-        console.log('Géneros favoritos actualizados:', response);
-        this.isEditingGenres = false;  // Finalizar la edición
+        console.log('Perfil actualizado', response);
+        this.isEditingProfiles = false;
       },
       (error) => {
-        console.error('Error al actualizar los géneros favoritos', error);
+        console.error('Error al actualizar perfil', error);
       }
     );
   }
 
+
   // Función para cancelar la edición de géneros
   cancelEdit() {
-    this.isEditingGenres = false;
-    this.newGenres = '';  // Limpiar el campo
+    this.isEditingProfiles = false;
+    this.newProfile = '';  // Limpiar el campo
   }
 }
 

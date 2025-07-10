@@ -33,9 +33,14 @@ export class ApiService {
   }
 
   // Método para actualizar los géneros favoritos del usuario
-  updateUserGenres(userId: string, genres: string[]): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/users/${userId}`, { favoriteGenres: genres });
+  updateUser(userId: string, data: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/users/${userId}`, data);
   }
+
+  uploadUserPhoto(formData: FormData): Observable<{ url: string }> {
+    return this.http.post<{ url: string }>(`${this.apiUrl}/users/upload-photo`, formData);
+  }
+
 
   // Obtener los comentarios de un post
   getComments(postId: string): Observable<any[]> {

@@ -93,17 +93,6 @@
             {{ usuario.favoriteGenres && usuario.favoriteGenres.length > 0 ? usuario.favoriteGenres.join(', ') : 'No especificado' }}
           </p>
 
-          <!-- Botón para editar géneros -->
-          <button mat-raised-button color="primary" (click)="editGenres()" *ngIf="!isEditingGenres">Editar Géneros</button>
-
-          <!-- Formulario para editar géneros favoritos -->
-          <div *ngIf="isEditingGenres">
-            <h3>Editar Géneros Favoritos</h3>
-            <input [(ngModel)]="newGenres" placeholder="Escribe los géneros favoritos" />
-            <button mat-raised-button color="primary" (click)="saveGenres()">Guardar</button>
-            <button mat-raised-button color="warn" (click)="cancelEdit()">Cancelar</button>
-          </div>
-
           <!-- Seguidores -->
           <p class="followers-count">
             <strong>Seguidores: </strong>{{ usuario.followers ? usuario.followers.length : 0 }}
@@ -113,6 +102,64 @@
           <p class="following-count">
             <strong>Siguiendo: </strong>{{ usuario.following ? usuario.following.length : 0 }}
           </p>
+
+          <!-- Botón para editar perfil -->
+          <button mat-raised-button color="primary" (click)="editGenres()" *ngIf="!isEditingProfiles">
+            Editar perfil
+          </button>
+
+          <!-- Formulario para editar géneros favoritos -->
+          <div *ngIf="isEditingProfiles">
+            <form class="example-form">
+
+              <table class="example-full-width" cellspacing="0">
+                <tr>
+                  <td>
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Username</mat-label>
+                      <input matInput [(ngModel)]="usuario.username" name="username">
+                    </mat-form-field>
+                  </td>
+                </tr>
+              </table>
+
+              <table class="example-full-width" cellspacing="0">
+                <tr>
+                  <td>
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Bio</mat-label>
+                      <input matInput [(ngModel)]="usuario.bio" name="bio">
+                    </mat-form-field>
+                  </td>
+                </tr>
+              </table>
+
+              <table class="example-full-width" cellspacing="0">
+                <tr>
+                  <td>
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Géneros favoritos</mat-label>
+                      <input matInput [(ngModel)]="newProfile" name="favoriteGenres" placeholder="Ej: acción, drama, terror">
+                    </mat-form-field>
+                  </td>
+                </tr>
+              </table>
+
+              <!-- Subir imagen -->
+              <label for="fileInput">Subir nueva foto de perfil:</label>
+              <input type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*">
+
+              <!-- Vista previa -->
+              <div *ngIf="usuario.imageUrl">
+                <p>Vista previa de la foto:</p>
+                <img [src]="usuario.imageUrl" alt="Foto de perfil" style="max-width: 200px; border-radius: 8px;">
+              </div>
+
+            </form>
+
+            <button mat-raised-button color="primary" (click)="saveProfile()">Guardar</button>
+            <button mat-raised-button color="warn" (click)="cancelEdit()">Cancelar</button>
+          </div>
         </div>
       </div>
 
