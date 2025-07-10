@@ -116,24 +116,6 @@ export class HomeComponent {
     }
   }
 
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const formData = new FormData();
-    formData.append('file', file);
-
-    this.apiService.uploadUserPhoto(formData).subscribe({
-      next: (res) => {
-        this.usuario.photoUrl = res.url;
-        console.log('Imagen guardada localmente:', res.url);
-      },
-      error: (err) => {
-        console.error('Error al subir imagen local:', err);
-      }
-    });
-  }
-
   // Función para iniciar la edición de géneros
   editGenres() {
     this.isEditingProfiles = true;

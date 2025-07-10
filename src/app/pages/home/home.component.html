@@ -146,14 +146,16 @@
               </table>
 
               <!-- Subir imagen -->
-              <label for="fileInput">Subir nueva foto de perfil:</label>
-              <input type="file" id="fileInput" (change)="onFileSelected($event)" accept="image/*">
-
-              <!-- Vista previa -->
-              <div *ngIf="usuario.imageUrl">
-                <p>Vista previa de la foto:</p>
-                <img [src]="usuario.imageUrl" alt="Foto de perfil" style="max-width: 200px; border-radius: 8px;">
-              </div>
+              <table class="example-full-width" cellspacing="0">
+                <tr>
+                  <td>
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Url Imagen de Perfil</mat-label>
+                      <input matInput [(ngModel)]="usuario.imageUrl" name="Url">
+                    </mat-form-field>
+                  </td>
+                </tr>
+              </table>
 
             </form>
 
